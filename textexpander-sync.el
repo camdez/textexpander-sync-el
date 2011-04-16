@@ -21,18 +21,18 @@
 
 ;;; Instructions:
 
-;; 1) Assuming that you have text expander setup
-;; 2) put this file and osx-plist.el  in your lisp dir
-;; 3) add to .emacs: 
+;; 1) Assuming that you have TextExpander set up
+;; 2) put this file and osx-plist.el in your lisp dir
+;; 3) add to .emacs:
 ;;   (require 'textexpander-sync)
 ;; 4) sync (and resync) via: M-x textexpander-sync
-;; 5) In textexpander settings set "Expand In" to 
-;;    "all applications excect" emacs
-;; 
+;; 5) In TextExpander settings set "Expand In" to
+;;    "all applications except" Emacs
+;;
 ;; This code requires (osx-plist), which was probably included
 ;; If not, download it here:
 ;;   otherwise: http://edward.oconnor.cx/elisp/osx-plist.el
-;; 
+;;
 
 
 ;;; Code:
@@ -40,24 +40,13 @@
 (require 'osx-plist)
 
 (defvar textexpander-sync-file "~/Library/Application Support/TextExpander/Settings.textexpander"
-  "Your text epander settings")
+  "Path to your TextExpander settings file.")
 
 (defun textexpander-sync ()
-  "Grab TextExpander snippets " 
+  "Import TextExpander snippets."
   (interactive)
-  (let ((plist (osx-plist-parse-file textexpander-sync-file)))
-
-	(let ((snippet (gethash "snippetsTE2" plist)))
-	  (mapc (lambda (s)
-			  (message "Importing %s" (gethash "abbreviation" s))
-			  (setq abbrev (gethash "abbreviation" s))
-			  (setq expand (gethash "plainText" s))
-			  (define-abbrev global-abbrev-table abbrev expand)
-			  )
-			snippet)
-	  )
-	)
-  )
+  (mapc (lambda (snippet)
+          (define-abbrev global-abbrev-table (gethash "abbreviation" snippet) (gethash "plainText" snippet)))
+        (gethash "snippetsTE2" (osx-plist-parse-file textexpander-sync-file))))
 
 (provide 'textexpander-sync)
-

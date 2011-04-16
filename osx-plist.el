@@ -3,6 +3,7 @@
 ;; Copyright (C) 2005  Edward O'Connor <ted@oconnor.cx>
 
 ;; Author: Edward O'Connor <ted@oconnor.cx>
+;;   with modifications by Cameron Desautels <camdez@gmail.com>
 ;; Keywords: convenience
 
 ;; This file is free software; you can redistribute it and/or modify it

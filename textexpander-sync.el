@@ -3,6 +3,7 @@
 ;; Copyright (C) 2009  Ted Roden <tedroden@gmail.com>
 
 ;; Author: Ted Roden <tedroden@gmail.com>
+;; Author: Cameron Desautels <camdez@gmail.com>
 
 ;; This file is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by the
@@ -29,9 +30,8 @@
 ;; 5) In TextExpander settings set "Expand In" to
 ;;    "all applications except" Emacs
 ;;
-;; This code requires (osx-plist), which was probably included
-;; If not, download it here:
-;;   otherwise: http://edward.oconnor.cx/elisp/osx-plist.el
+;; This code requires a modified version of osx-plist which is available here:
+;;   https://github.com/camdez/textexpander-sync-el/blob/master/osx-plist.el
 ;;
 
 

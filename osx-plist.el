@@ -71,6 +71,9 @@
           ((eq name 'true)  t)
           ((memq name '(key string))
            (apply 'concat children))
+          ((eq name 'integer)
+           (string-to-number (apply 'concat children)))
+          ;; TODO support `date' and other value types
           ((eq name 'dict)
            (osx-plist-process-dict node))
           ((eq name 'array)

@@ -42,6 +42,11 @@
 (defvar textexpander-sync-file "~/Library/Application Support/TextExpander/Settings.textexpander"
   "Path to your TextExpander settings file.")
 
+(defconst textexpander-snippet-type-plaintext   0)
+(defconst textexpander-snippet-type-richtext    1)
+(defconst textexpander-snippet-type-applescript 2)
+(defconst textexpander-snippet-type-shellscript 3)
+
 (defun textexpander-sync ()
   "Import TextExpander snippets."
   (interactive)
@@ -49,14 +54,14 @@
           (let ((abbrev (gethash "abbreviation" snippet))
                 (expansion (gethash "plainText" snippet))
                 (type (gethash "snippetType" snippet)))
-            (cond ((= type 0)           ; ordinary text
+            (cond ((= type textexpander-snippet-type-plaintext)
                    (define-abbrev global-abbrev-table abbrev expansion))
-                  ((= type 2)           ; AppleScript
+                  ((= type textexpander-snippet-type-applescript)
                    (define-abbrev global-abbrev-table abbrev t
                      `(lambda ()
                         (backward-delete-char ,(length abbrev))
                         (insert (do-applescript ,expansion)))))
-                  ((= type 3)           ; shell script
+                  ((= type textexpander-snippet-type-shellscript)
                    (define-abbrev global-abbrev-table abbrev t
                      `(lambda ()
                         (backward-delete-char ,(length abbrev))

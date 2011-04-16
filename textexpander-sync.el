@@ -51,6 +51,11 @@
                 (type (gethash "snippetType" snippet)))
             (cond ((= type 0)           ; ordinary text
                    (define-abbrev global-abbrev-table abbrev expansion))
+                  ((= type 2)           ; AppleScript
+                   (define-abbrev global-abbrev-table abbrev t
+                     `(lambda ()
+                        (backward-delete-char ,(length abbrev))
+                        (insert (do-applescript ,expansion)))))
                   ((= type 3)           ; shell script
                    (define-abbrev global-abbrev-table abbrev t
                      `(lambda ()

@@ -46,7 +46,16 @@
   "Import TextExpander snippets."
   (interactive)
   (mapc (lambda (snippet)
-          (define-abbrev global-abbrev-table (gethash "abbreviation" snippet) (gethash "plainText" snippet)))
+          (let ((abbrev (gethash "abbreviation" snippet))
+                (expansion (gethash "plainText" snippet))
+                (type (gethash "snippetType" snippet)))
+            (cond ((= type 0)           ; ordinary text
+                   (define-abbrev global-abbrev-table abbrev expansion))
+                  ((= type 3)           ; shell script
+                   (define-abbrev global-abbrev-table abbrev t
+                     `(lambda ()
+                        (backward-delete-char ,(length abbrev))
+                        (insert (shell-command-to-string ,expansion))))))))
         (gethash "snippetsTE2" (osx-plist-parse-file textexpander-sync-file))))
 
 (provide 'textexpander-sync)
